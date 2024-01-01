@@ -8,23 +8,19 @@ import React, {useState, useEffect} from 'react';
 import {jwtDecode} from 'jwt-decode';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(()=>{
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   const [token, setToken] = useState(() => {
     const storedToken = localStorage.getItem('token');
     return storedToken ? JSON.parse(storedToken) : null;
   });
 
-  const applyForJob = async (jobId) => {
-    try {
-      await JoblyApi.applyForJob(jobId, currentUser.username);
-    } catch (error) {
-      console.error('Error applying for the job:', error);
-    }
-  };
-
   useEffect(() => {
     localStorage.setItem('token', JSON.stringify(token));
-  }, [token]);
+    localStorage.setItem('user', JSON.stringify(currentUser))
+  }, [token, currentUser]);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -98,7 +94,6 @@ function App() {
       login={login} 
       signup={signup} 
       update={update}
-      applyForJob={applyForJob}
       />
       </AuthContext.Provider>
       </BrowserRouter>

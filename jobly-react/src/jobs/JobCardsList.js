@@ -1,7 +1,7 @@
 import React from "react";
 import JobCard from "./JobCard";
 
-const JobsCardsList = ({ jobs, isCompanyPage, applyForJob }) => {
+const JobsCardsList = ({ jobs, isCompanyPage }) => {
 
   return (
       <div>
@@ -14,7 +14,6 @@ const JobsCardsList = ({ jobs, isCompanyPage, applyForJob }) => {
                 equity={job.equity}
                 companyName={job.companyName}
                 isCompanyPage={isCompanyPage}
-                applyForJob={applyForJob}
             />
         ))}
       </div>
